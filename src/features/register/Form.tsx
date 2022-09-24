@@ -3,7 +3,7 @@ import { FormStep1, FormStep2, FormHeader } from "./_components";
 import { useForm } from "./_hooks";
 
 function Form() {
-  const { values, actions, errors, submitable, isStep1Valid } = useForm();
+  const { actions, errors, submitable, isStep1Valid, fields } = useForm();
   const [step, setStep] = useState<0 | 1 | 2>(0);
 
   const handleInputChange =
@@ -28,10 +28,12 @@ function Form() {
       {step === 0 && (
         <section>
           <FormStep1
-            firstname={values.firstname}
-            lastname={values.lastname}
-            firstnameError={errors.firstname}
-            lastnameError={errors.lastname}
+            firstname={fields.firstname.value}
+            lastname={fields.lastname.value}
+            firstnameError={
+              fields.firstname.dirty ? errors.firstname : undefined
+            }
+            lastnameError={fields.lastname.dirty ? errors.lastname : undefined}
             onFirstnameChange={handleInputChange(actions.setFirstname)}
             onLastnameChange={handleInputChange(actions.setLastname)}
           />
@@ -48,10 +50,10 @@ function Form() {
       {step === 1 && (
         <section>
           <FormStep2
-            email={values.email}
-            phone={values.phone}
-            phoneError={errors.phone}
-            emailError={errors.email}
+            email={fields.email.value}
+            phone={fields.phone.value}
+            phoneError={fields.phone.dirty ? errors.phone : undefined}
+            emailError={fields.email.dirty ? errors.email : undefined}
             onEmailChange={handleInputChange(actions.setEmail)}
             onPhoneChange={handleInputChange(actions.setPhone)}
           />

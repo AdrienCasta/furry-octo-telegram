@@ -3,11 +3,11 @@ interface FormStep1Props {
   phone: string;
   onEmailChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onPhoneChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  emailError: {
+  emailError?: {
     error: boolean;
     message: (string | null)[];
   };
-  phoneError: {
+  phoneError?: {
     error: boolean;
     message: (string | null)[];
   };
@@ -29,7 +29,7 @@ const FormStep2 = ({
           <input
             value={email}
             onChange={onEmailChange}
-            aria-invalid={emailError.error}
+            aria-invalid={emailError?.error}
             type="text"
             placeholder="E-mail"
             name="email"
@@ -38,7 +38,7 @@ const FormStep2 = ({
           />
         </label>
         <ul>
-          {emailError.message.map((errorMessage) => (
+          {emailError?.message.map((errorMessage) => (
             <li key={`email:${errorMessage}`} id="emailError">
               {errorMessage}
             </li>
@@ -51,7 +51,7 @@ const FormStep2 = ({
           <input
             value={phone}
             onChange={onPhoneChange}
-            aria-invalid={phoneError.error}
+            aria-invalid={phoneError?.error}
             type="text"
             aria-describedby="phoneError"
             placeholder="phone"
@@ -59,7 +59,7 @@ const FormStep2 = ({
           />
         </label>
         <ul>
-          {phoneError.message.map((errorMessage) => (
+          {phoneError?.message.map((errorMessage) => (
             <li key={`phone:${errorMessage}`} id="phoneError">
               {errorMessage}
             </li>

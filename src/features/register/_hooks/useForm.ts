@@ -6,6 +6,24 @@ interface Values {
   email: string;
   phone: string;
 }
+interface Fields {
+  firstname: {
+    value: string;
+    dirty: boolean;
+  };
+  lastname: {
+    value: string;
+    dirty: boolean;
+  };
+  email: {
+    value: string;
+    dirty: boolean;
+  };
+  phone: {
+    value: string;
+    dirty: boolean;
+  };
+}
 
 const validateName = (name: string) => {
   return /^[a-zA-Z]+$/.test(name);
@@ -102,40 +120,53 @@ export const phoneErrorBag = (value: string) => {
 };
 
 const prepareErrorBags = (
-  values: Values
+  fields: Fields
 ): Record<keyof Values, { error: boolean; message: (string | null)[] }> => {
   return {
-    firstname: firtnameErrorBag(values.firstname),
-    lastname: lastnameErrorBag(values.lastname),
-    email: emailErrorBag(values.email),
-    phone: phoneErrorBag(values.phone),
+    firstname: firtnameErrorBag(fields.firstname.value),
+    lastname: lastnameErrorBag(fields.lastname.value),
+    email: emailErrorBag(fields.email.value),
+    phone: phoneErrorBag(fields.phone.value),
   };
+};
+
+const initFields = (values: Values) => {
+  return Object.entries(values).reduce((acc, [field, value]) => {
+    return {
+      ...acc,
+      [field]: {
+        value,
+        dirty: false,
+      },
+    };
+  }, {} as Fields);
 };
 
 const useForm = (
   initialValues: Values = { firstname: "", lastname: "", email: "", phone: "" }
 ) => {
-  const [values, setValue] = useState(initialValues);
+  const [fields, setField] = useState<Fields>(() => initFields(initialValues));
 
   const [setFirstname, setLastname, setEmail, setPhone] = useMemo(
     () =>
       ["firstname", "lastname", "email", "phone"].map(
-        (key) => (value: string) => setValue({ ...values, [key]: value })
+        (key) => (value: string) =>
+          setField({ ...fields, [key]: { value, dirty: true } })
       ),
-    [values]
+    [fields]
   );
 
   const errors = useMemo(() => {
-    const { firstname, lastname, email, phone } = prepareErrorBags(values);
+    const { firstname, lastname, email, phone } = prepareErrorBags(fields);
     return {
       firstname,
       lastname,
       email,
       phone,
     };
-  }, [values]);
+  }, [fields]);
 
-  const submitable = Object.keys(values).every(
+  const submitable = Object.keys(fields).every(
     (key) => errors[key as keyof Values].error === false
   );
 
@@ -151,7 +182,7 @@ const useForm = (
   };
 
   return {
-    values,
+    fields,
     actions,
     errors,
     submitable,

@@ -3,11 +3,11 @@ interface FormStep1Props {
   lastname: string;
   onFirstnameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onLastnameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  firstnameError: {
+  firstnameError?: {
     error: boolean;
     message: (string | null)[];
   };
-  lastnameError: {
+  lastnameError?: {
     error: boolean;
     message: (string | null)[];
   };
@@ -29,7 +29,7 @@ const FormStep1 = ({
           <input
             value={firstname}
             onChange={onFirstnameChange}
-            aria-invalid={firstnameError.error}
+            aria-invalid={firstnameError?.error}
             type="text"
             placeholder="Prénom"
             name="firstname"
@@ -38,7 +38,7 @@ const FormStep1 = ({
           />
         </label>
         <ul>
-          {firstnameError.message.map((errorMessage) => (
+          {firstnameError?.message.map((errorMessage) => (
             <li key={`firstname:${errorMessage}`} id="firstnameError">
               {errorMessage}
             </li>
@@ -51,7 +51,7 @@ const FormStep1 = ({
           <input
             value={lastname}
             onChange={onLastnameChange}
-            aria-invalid={lastnameError.error}
+            aria-invalid={lastnameError?.error}
             type="text"
             aria-describedby="lastnameError"
             placeholder="nom"
@@ -59,7 +59,7 @@ const FormStep1 = ({
           />
         </label>
         <ul>
-          {lastnameError.message.map((errorMessage) => (
+          {lastnameError?.message.map((errorMessage) => (
             <li key={`lastname:${errorMessage}`} id="lastnameError">
               {errorMessage}
             </li>
