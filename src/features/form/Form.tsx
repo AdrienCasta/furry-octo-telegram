@@ -35,7 +35,11 @@ function Form() {
             onFirstnameChange={handleInputChange(actions.setFirstname)}
             onLastnameChange={handleInputChange(actions.setLastname)}
           />
-          <button onClick={handleNextStep} disabled={!isStep1Valid}>
+          <button
+            onClick={handleNextStep}
+            disabled={!isStep1Valid}
+            type="button"
+          >
             Suivant
           </button>
         </section>

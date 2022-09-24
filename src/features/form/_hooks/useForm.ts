@@ -11,7 +11,7 @@ const validateName = (name: string) => {
   return /^[a-zA-Z]+$/.test(name);
 };
 
-const validation = {
+export const validation = {
   isRequired: {
     check: (value: string) => {
       const error = value === "";
@@ -52,7 +52,7 @@ const validation = {
   },
 };
 
-const firtnameErrorBag = (firstname: string) => {
+export const firtnameErrorBag = (firstname: string) => {
   const { isRequired, isAValidHumanName } = validation;
   const isRequiredErrorBag = isRequired.check(firstname);
   const isValidFirstNameErrorBag = isAValidHumanName.check(firstname);
@@ -64,7 +64,7 @@ const firtnameErrorBag = (firstname: string) => {
     ].filter(Boolean),
   };
 };
-const lastnameErrorBag = (lastname: string) => {
+export const lastnameErrorBag = (lastname: string) => {
   const { isRequired, isAValidHumanName } = validation;
   const isRequiredErrorBag = isRequired.check(lastname);
   const isValidLastnameErrorBag = isAValidHumanName.check(lastname);
@@ -77,7 +77,7 @@ const lastnameErrorBag = (lastname: string) => {
   };
 };
 
-const emailErrorBag = (value: string) => {
+export const emailErrorBag = (value: string) => {
   const { isRequired, email } = validation;
   const isRequiredErrorBag = isRequired.check(value);
   const emailErrorBag = email.check(value);
@@ -89,7 +89,7 @@ const emailErrorBag = (value: string) => {
   };
 };
 
-const phoneErrorBag = (value: string) => {
+export const phoneErrorBag = (value: string) => {
   const { isRequired, phone } = validation;
   const isRequiredErrorBag = isRequired.check(value);
   const phoneErrorBag = phone.check(value);

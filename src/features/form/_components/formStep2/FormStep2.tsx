@@ -37,11 +37,13 @@ const FormStep2 = ({
             aria-describedby="emailError"
           />
         </label>
-        {emailError.message.map((errorMessage) => (
-          <p key={`email:${errorMessage}`} id="emailError">
-            {errorMessage}
-          </p>
-        ))}
+        <ul>
+          {emailError.message.map((errorMessage) => (
+            <li key={`email:${errorMessage}`} id="emailError">
+              {errorMessage}
+            </li>
+          ))}
+        </ul>
       </div>
       <div>
         <label htmlFor="phone">
@@ -52,15 +54,17 @@ const FormStep2 = ({
             aria-invalid={phoneError.error}
             type="text"
             aria-describedby="phoneError"
-            placeholder="bom"
+            placeholder="phone"
             id="phone"
           />
         </label>
-        {phoneError.message.map((errorMessage) => (
-          <p key={`phone:${errorMessage}`} id="phoneError">
-            {errorMessage}
-          </p>
-        ))}
+        <ul>
+          {phoneError.message.map((errorMessage) => (
+            <li key={`phone:${errorMessage}`} id="phoneError">
+              {errorMessage}
+            </li>
+          ))}
+        </ul>
       </div>
     </fieldset>
   );

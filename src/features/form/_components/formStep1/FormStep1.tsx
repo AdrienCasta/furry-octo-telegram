@@ -54,7 +54,7 @@ const FormStep1 = ({
             aria-invalid={lastnameError.error}
             type="text"
             aria-describedby="lastnameError"
-            placeholder="bom"
+            placeholder="nom"
             id="lastname"
           />
         </label>
