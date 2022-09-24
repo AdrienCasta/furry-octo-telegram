@@ -1,11 +1,7 @@
 import { useMemo, useState } from "react";
+import { RegistrationValues } from "../types";
 
-interface Values {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phone: string;
-}
+type Values = RegistrationValues;
 interface Fields {
   firstname: {
     value: string;

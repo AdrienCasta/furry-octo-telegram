@@ -1,10 +1,24 @@
-import { useState } from "react";
-import { FormStep1, FormStep2, FormHeader } from "./_components";
-import { useForm } from "./_hooks";
+import { RegistrationStep, RegistrationValues } from "../../types";
+import { FormStep1, FormStep2, FormHeader } from "../../_components";
+import { useForm } from "../../_hooks";
 
-function Form() {
-  const { actions, errors, submitable, isStep1Valid, fields } = useForm();
-  const [step, setStep] = useState<0 | 1 | 2>(0);
+interface FormProps {
+  step: RegistrationStep;
+  values: RegistrationValues;
+  onStep1Validation: (
+    values: Pick<RegistrationValues, "firstname" | "lastname">
+  ) => void;
+  onStep2Validation: (
+    values: Pick<RegistrationValues, "email" | "phone">
+  ) => void;
+}
+function Form({
+  step,
+  values,
+  onStep1Validation,
+  onStep2Validation,
+}: FormProps) {
+  const { actions, errors, submitable, isStep1Valid, fields } = useForm(values);
 
   const handleInputChange =
     (_action: typeof actions[keyof typeof actions]) =>
@@ -13,19 +27,28 @@ function Form() {
 
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStep(2);
+    const { phone, email } = fields;
+    console.log(phone, email);
+    onStep2Validation({
+      phone: phone.value,
+      email: email.value,
+    });
   };
 
   const handleNextStep = () => {
     if (isStep1Valid) {
-      setStep(1);
+      const { firstname, lastname } = fields;
+      onStep1Validation({
+        firstname: firstname.value,
+        lastname: lastname.value,
+      });
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <FormHeader step={step} />
-      {step === 0 && (
+      {step === 1 && (
         <section>
           <FormStep1
             firstname={fields.firstname.value}
@@ -47,7 +70,7 @@ function Form() {
         </section>
       )}
 
-      {step === 1 && (
+      {step === 2 && (
         <section>
           <FormStep2
             email={fields.email.value}
