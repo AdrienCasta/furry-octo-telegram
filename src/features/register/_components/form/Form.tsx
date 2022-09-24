@@ -28,7 +28,6 @@ function Form({
   const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { phone, email } = fields;
-    console.log(phone, email);
     onStep2Validation({
       phone: phone.value,
       email: email.value,
