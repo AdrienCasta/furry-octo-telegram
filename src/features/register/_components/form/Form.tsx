@@ -47,6 +47,11 @@ function Form({
   return (
     <form onSubmit={handleSubmit}>
       <FormHeader step={step} />
+      {step === 3 && (
+        <pre>
+          <code>{JSON.stringify(fields, null, 2)}</code>
+        </pre>
+      )}
       {step === 1 && (
         <section>
           <FormStep1
