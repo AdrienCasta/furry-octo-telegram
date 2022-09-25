@@ -1,12 +1,22 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { RegisterContext } from "./_contexts";
 import { Form } from "./_components";
 import { RegistrationStep, RegistrationValues } from "./types";
+import { useStepGuard } from "./_hooks";
 
 function Register() {
   const { state, dispatch } = RegisterContext.useRegister();
-  const navigate = useNavigate();
   const { step } = useParams();
+  const navigate = useNavigate();
+  const castedParamStep = +(step || 1);
+  const shouldRedirect = useStepGuard(castedParamStep as RegistrationStep);
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      navigate(`/register/1`);
+    }
+  }, [shouldRedirect]);
 
   const handleStep1Validation = ({
     firstname,
@@ -34,7 +44,7 @@ function Register() {
   return (
     <Form
       values={state}
-      step={+(step || 1) as RegistrationStep}
+      step={castedParamStep as RegistrationStep}
       onStep1Validation={handleStep1Validation}
       onStep2Validation={handleStep2Validation}
     />

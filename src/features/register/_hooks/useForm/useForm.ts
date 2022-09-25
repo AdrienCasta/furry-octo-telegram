@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { RegistrationValues } from "../types";
+import { RegistrationValues } from "../../types";
 
 type Values = RegistrationValues;
 interface Fields {
